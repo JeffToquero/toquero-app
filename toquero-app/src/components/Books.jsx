@@ -54,11 +54,7 @@ const initialBooks = [
 
 const Books = () => {
   const [books, setBooks] = useState(initialBooks)
-  const [searchQuery, setSearchQuery] = useState('')
-
-  const filteredBooks = books.filter(book =>
-    book.title.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+  const [filteredBooks, setFilteredBooks] = useState(initialBooks)
 
   const toggleStatus = index => {
     const updatedBooks = books.map((book, i) =>
@@ -71,12 +67,17 @@ const Books = () => {
         : book
     )
     setBooks(updatedBooks)
+    setFilteredBooks(
+      updatedBooks.filter(book =>
+        book.title.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    )
   }
 
   return (
     <div className="container">
       <h1>Books</h1>
-      <SearchFilter searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <SearchFilter books={books} setFilteredBooks={setFilteredBooks} />
       <ul>
         <li className="headers">
           <span>No.</span>
